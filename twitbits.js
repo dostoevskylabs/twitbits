@@ -29,7 +29,7 @@ Twitter.on('direct_message', function(event){
   let raw_message = event["direct_message"]["text"].split(" ");
   let message = [];
   let tags = [];
-  // loop through the user_mentions object
+  // loop through the user_mentions object array
   // we have to use this because twitter has a security mechanism in place
   // that will stop the ability to send tags in direct messages if you send too many
   for ( let i = 0; i < event["direct_message"]["entities"]["user_mentions"].length; i++ ) {
