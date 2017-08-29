@@ -92,6 +92,9 @@ Twitter.on('direct_message', function(event){
         .write();
       sendDM(T, userid, `[info] Got it, ${username}`);
     },
+    /**
+     * Delete
+     */
     ".d":function(){
       db.get('entries')
         .remove({ id: localizedMessage[0] })
