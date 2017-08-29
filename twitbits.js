@@ -105,9 +105,9 @@ Twitter.on('direct_message', function(event){
         let composedMessage = "";
         let i = 1;
         result.forEach(function(entry){
-          if ( entry === "" ) return false;
-          let link = ( entry.link != undefined ? entry.link : "");
-          composedMessage += `${i}) ${entry.message} ${link}\n`;
+          let link = ( entry.link != undefined ? ` ${entry.link}` : "");
+          if ( entry.message === "" && link === "" ) return false;
+          composedMessage += `${i}) ${entry.message}${link}\n`;
           i++;
         });
         sendDM(T, userid, `[bot] twitbits found:\n${composedMessage}`);       
