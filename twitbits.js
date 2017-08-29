@@ -1,7 +1,8 @@
 /**
  * Twitbit - Twitter DM Bot
  *
- * Used to quickly save tidbits of information you want to catalogue for later
+ * Used to slide into DMs
+ * Well really just to save tidbits of information you want to catalogue for later
  *
  * @author Elijah Seymour
  */
@@ -25,7 +26,7 @@ let users = db.get('users').value();
 // DM Received
 Twitter.on('direct_message', function(event){
   let username = event["direct_message"]["sender_screen_name"];
-  let userid = event["direct_message"].sender_id_str
+  let userid = event["direct_message"].sender_id_str;
   let message = event["direct_message"]["text"].split(" ");
   let tags = [];
   // loop through the hashtags object array
@@ -34,10 +35,14 @@ Twitter.on('direct_message', function(event){
   }  
   // User is not in our ACL, gtfo
   if ( !users.includes(username) ) return false;
+  // break the anatomy of the string up int multiple parts
+  // [cmd] ['each', 'word', 'of', 'message']
+  // remove tags entirely as there is a tags array already
   let cmd = message[0];
+  let localizedMessage = [];
   // Remove the command and the tags (which are actually mentions) from the message we will store
-  message.filter(function(word){
-   if ( word.indexOf(".") === -1 && word.indexOf("#") === -1 ) return true;
+  message.forEach(function(word){
+   if ( word.indexOf(".") === -1 && word.indexOf("#") === -1 ) localizedMessage.push(word);
   });
   // Command Controller
   const commands = {
@@ -79,7 +84,7 @@ Twitter.on('direct_message', function(event){
         .push({
           userid:userid,
           username:username,
-          message:message.join(" "),
+          message:localizedMessage.join(" "),
           tags:tags,
           link: url[0] // temporarily
         })
