@@ -1,8 +1,7 @@
 /**
  * Twitbit - Twitter DM Bot
  *
- * Used to slide into DMs
- * Well really just to save tidbits of information you want to catalogue for later
+ * Used to quickly save tidbits of information you want to catalogue for later
  *
  * @author Elijah Seymour
  */
