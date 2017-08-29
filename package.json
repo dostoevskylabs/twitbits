@@ -8,7 +8,8 @@
     "author": "Elijah Seymour <dostoevsky.laptop@gmail.com>",
     "dependencies": {
         "lowdb": ">= 0.17.2",
-        "twit": ">= 2.2.9"
+        "twit": ">= 2.2.9",
+        "shortid": ">= 2.2.8"        
     },
     "main": "twitbits",
     "engines": {
