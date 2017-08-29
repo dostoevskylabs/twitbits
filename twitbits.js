@@ -7,6 +7,7 @@
  */
 const TwitPackage = require('twit');
 const lowdb = require('lowdb');
+const shortid = require('shortid')
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
 const db = lowdb(adapter);
@@ -67,7 +68,7 @@ Twitter.on('direct_message', function(event){
         });
       });
       if ( localizedTags.length > 0 ) {
-        sendDM(T, userid, `[bot] Tags: ${localizedTags.join(", ")}`);
+        sendDM(T, userid, `[info] Tags: ${localizedTags.join(", ")}`);
       }
     },
     /**
@@ -81,6 +82,7 @@ Twitter.on('direct_message', function(event){
       }
       db.get('entries')
         .push({
+          id:shortid.generate(),
           userid:userid,
           username:username,
           message:localizedMessage.join(" "),
@@ -88,7 +90,13 @@ Twitter.on('direct_message', function(event){
           link: url[0] // temporarily
         })
         .write();
-      sendDM(T, userid, `[bot] Got it, ${username}`);
+      sendDM(T, userid, `[info] Got it, ${username}`);
+    },
+    ".d":function(){
+      db.get('entries')
+        .remove({ id: localizedMessage[0] })
+        .write();
+      sendDM(T, userid, `[info] Deleted ${localizedMessage[0]}`);
     },
     /**
      * Search
@@ -99,17 +107,15 @@ Twitter.on('direct_message', function(event){
                     .filter({ username: username, tags: tags })
                     .value();
       if ( result.length === 0 ) { // no results!
-        sendDM(T, userid, "[bot] No twitbits found! Try adding some.");
+        sendDM(T, userid, "[info] No twitbits found! Try adding some.");
       } else {
         let localizedMessage = [];
-        let i = 1;
         result.forEach(function(entry){
           let link = ( entry.link != undefined ? ` ${entry.link}` : "");
           if ( entry.message === "" && link === "" ) return false;
-          localizedMessage.push(`${i}) ${entry.message}${link}`);
-          i++;
+          localizedMessage.push(`[${entry.id}] ${entry.message}${link}`);
         });
-        sendDM(T, userid, `[bot] twitbits found:\n${localizedMessage.join("\n")}`);       
+        sendDM(T, userid, `[info] twitbits found:\n${localizedMessage.join("\n")}`);       
       }
     }
   };
