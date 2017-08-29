@@ -1,0 +1,17 @@
+{
+    "name": "twitbits",
+    "version": "0.0.1",
+    "description": "catalogue tidbits of information via twitter dm",
+    "keywords": ["twitter", "dm", "bot"],
+    "repository": "https://github.com/dostoevskylabs/tidbits.git",
+    "homepage": "https://github.com/dostoevskylabs",
+    "author": "Elijah Seymour <dostoevsky.laptop@gmail.com>",
+    "dependencies": {
+        "lowdb": ">= 0.17.2",
+        "twit": ">= 2.2.9"
+    },
+    "main": "twitbits",
+    "engines": {
+        "node": ">= 6.11.0"
+    },
+}
